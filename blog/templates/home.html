@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Blog app</h1>
+<ul>
+    {% for post in object_list %}
+        <li><h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
+            <p>Author: {{ post.author }}</p>
+            <p>{{ post.text }}</p>
+            {% for comment in post.comments.all %}
+                <h3>Comment: </h3>
+                <p>Author: {{ comment.author }}</p>
+                <p>{{ comment.comment }}</p>
+            {% endfor %}
+        </li>
+    {% endfor %}
+</ul>
+{% if user.is_authenticated %}
+    <form>
+        <button formaction="{% url 'warning' %}">Create post</button>
+    </form>
+{% endif %}
+{% endblock content %}
